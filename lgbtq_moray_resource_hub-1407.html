@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moray Out - LGBTQ+ Resource & Events Hub</title>
+    <!-- Tailwind CSS for modern layout and design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter and Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons for clean SVG iconography -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Custom scrollbar styling for a premium feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 1);
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(28, 46, 39, 0.4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(28, 46, 39, 0.6);
+        }
+        /* Custom animations for the breathing exercises */
+        @keyframes breatheIn {
+            0% { transform: scale(1); background-color: rgba(251, 140, 0, 0.2); border-color: rgba(251, 140, 0, 0.4); }
+            50% { transform: scale(1.5); background-color: rgba(168, 85, 247, 0.4); border-color: rgba(168, 85, 247, 0.8); }
+            100% { transform: scale(1); background-color: rgba(251, 140, 0, 0.2); border-color: rgba(251, 140, 0, 0.4); }
+        }
+        .breathing-circle-anim {
+            animation: breatheIn 8s ease-in-out infinite;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#e8ebea',
+                            100: '#c5d0cc',
+                            200: '#9eb2ab',
+                            300: '#759489',
+                            400: '#537a6b',
+                            500: '#1c2e27', /* Deep Pine Green */
+                            600: '#182721',
+                            700: '#14201b',
+                            800: '#0f1814',
+                            900: '#0a100d',
+                        },
+                        accent: {
+                            orange: '#fb8c00', /* Sunset Orange */
+                            blue: '#29b6f6',   /* Ocean Sky Blue */
+                            purple: '#9333ea'  /* Subtle Purple Accent */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-300">
+
+    <!-- Simulated Web App Manifest dynamically injected for PWA installation capability -->
+    <script>
+        const manifest = {
+            "name": "LGBTQ Moray Resource Hub",
+            "short_name": "LGBTQ Moray",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#1c2e27",
+            "theme_color": "#fb8c00",
+            "description": "Progressive Web App for LGBTQ+ community resources, events, and mental/physical health links in Moray, Scotland.",
+            "icons": [
+                {
+                    "src": "Logo.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "Logo.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifest);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
+    </script>
+
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/95 backdrop-blur border-b border-slate-100 dark:border-slate-800 transition-colors duration-300 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Official Logo -->
+                <img src="https://raw.githubusercontent.com/lgbtqmoray/logo/main/logo.png" alt="LGBTQ Moray Logo" class="h-10 w-auto object-contain" onerror="this.src='https://placehold.co/100x100/1c2e27/ffffff?text=LGBTQ+Moray'">
+            </div>
+
+            <div class="flex items-center gap-2">
+                <!-- Theme Toggle -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition" title="Toggle Theme">
+                    <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-amber-400"></i>
+                </button>
+
+                <!-- Quick Exit Button (Safeguard) -->
+                <button onclick="quickExit()" class="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold px-3 py-2 rounded-xl text-xs md:text-sm shadow-lg shadow-red-600/20 hover:shadow-red-600/40 transition-all" title="Instantly hides this page and loads Google">
+                    <div class="flex items-center gap-1.5">
+                        <i data-lucide="shield-alert" class="w-4 h-4 animate-pulse"></i>
+                        <span class="hidden sm:inline">QUICK EXIT</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Wrapper -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 md:py-8 flex flex-col gap-6">
+
+        <!-- App Installation Banner / PWA Status Panel -->
+        <div id="pwaBanner" class="hidden bg-gradient-to-r from-brand-500 to-brand-400 text-white rounded-2xl p-4 md:p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10">
+                <i data-lucide="download" class="w-48 h-48"></i>
+            </div>
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 text-center md:text-left flex-col md:flex-row">
+                    <div class="p-3 bg-white/10 rounded-2xl">
+                        <i data-lucide="smartphone" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold">Install LGBTQ Moray Web App</h3>
+                        <p class="text-sm text-brand-100">Add this resource to your home screen for instant, private offline-ready access anytime.</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 w-full md:w-auto justify-center">
+                    <button id="pwaInstallBtn" class="bg-accent-orange hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all active:scale-95">
+                        Install Now
+                    </button>
+                    <button onclick="dismissPwaBanner()" class="text-white/80 hover:text-white px-3 py-2 text-xs font-medium">
+                        Later
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation Buttons -->
+        <div class="bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-2xl flex flex-wrap gap-1 shadow-inner">
+            <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="switchTab('health')" id="tabBtn-health" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                <span>Health Hub</span>
+            </button>
+            <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <i data-lucide="calendar" class="w-4 h-4"></i>
+                <span>Moray Events</span>
+            </button>
+        </div>
+
+        <!-- DASHBOARD TAB CONTENT -->
+        <section id="tab-dashboard" class="space-y-6 tab-content block">
+            
+            <!-- Quick Welcoming and Community Spotlight -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Highlight Card / Welcome -->
+                <div class="md:col-span-2 bg-gradient-to-br from-brand-500 via-brand-600 to-accent-purple text-white rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-lg relative overflow-hidden">
+                    <div class="absolute right-0 top-0 translate-x-12 -translate-y-12 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
+                    <div>
+                        <span class="bg-accent-orange/30 text-white font-bold tracking-widest text-[10px] uppercase px-2.5 py-1 rounded-full">Community Hub</span>
+                        <h2 class="text-2xl md:text-3xl font-bold mt-3 leading-tight font-heading">Fàilte! Welcome to LGBTQ+ Moray.</h2>
+                        <p class="text-brand-100 text-sm mt-2 max-w-lg leading-relaxed">
+                            A secure, private space serving Elgin, Forres, Lossiemouth, Buckie, Keith, and the wider Moray region. Connect with friendly peer support, look after your physical/mental well-being, and discover inclusive events near you.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <button onclick="switchTab('calendar')" class="bg-white text-brand-900 font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-slate-100 transition shadow">
+                            Explore Moray Events
+                        </button>
+                        <button onclick="switchTab('health')" class="bg-accent-orange hover:bg-orange-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs transition shadow-md shadow-orange-500/20">
+                            Find Healthcare Links
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Feature: Quick Mood Check-in -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-slate-800 dark:text-white font-heading">Daily Check-In</h3>
+                            <i data-lucide="smile" class="text-accent-orange w-5 h-5"></i>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">How are you feeling in the community today? Your response is entirely anonymous & stays on your device.</p>
+                        
+                        <div class="grid grid-cols-5 gap-2" id="moodBtnContainer">
+                            <button onclick="recordMood('Excellent', '😊')" class="mood-btn flex flex-col items-center p-2 rounded-xl border border-slate-100 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                                <span class="text-2xl">😊</span>
+                                <span class="text-[9px] mt-1 text-slate-500 dark:text-slate-400">Great</span>
+                            </button>
+                            <button onclick="recordMood('Good', '🙂')" class="mood-btn flex flex-col items-center p-2 rounded-xl border border-slate-100 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                                <span class="text-2xl">🙂</span>
+                                <span class="text-[9px] mt-1 text-slate-500 dark:text-slate-400">Good</span>
+                            </button>
+                            <button onclick="recordMood('Okay', '😐')" class="mood-btn flex flex-col items-center p-2 rounded-xl border border-slate-100 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                                <span class="text-2xl">😐</span>
+                                <span class="text-[9px] mt-1 text-slate-500 dark:text-slate-400">Okay</span>
+                            </button>
+                            <button onclick="recordMood('Struggling', '😔')" class="mood-btn flex flex-col items-center p-2 rounded-xl border border-slate-100 dark:border-slate-700/60 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+                                <span class="text-2xl">😔</span>
+                                <span class="text-[9px] mt-1 text-slate-500 dark:text-slate-400">Down</span>
+                            </button>
+                            <button onclick="recordMood('Crisis', '🚨')" class="mood-btn flex flex-col items-center p-2 rounded-xl border border-rose-100 dark:border-rose-950/40 hover:bg-rose-50 dark:hover:bg-rose-950/20 transition">
+                                <span class="text-2xl">🚨</span>
+                                <span class="text-[9px] mt-1 text-rose-500 dark:text-rose-400">Crisis</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mood History Display -->
+                    <div id="moodFeedback" class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700/60 text-xs text-slate-500 dark:text-slate-400">
+                        <!-- Filled dynamically by JavaScript -->
+                        No check-in today yet. Give it a tap!
+                    </div>
+                </div>
+            </div>
+
+            <!-- News / Spotlights -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Local Moray LGBTQ+ Updates -->
+                <div class="md:col-span-2 space-y-4">
+                    <h3 class="text-lg font-bold flex items-center gap-2 font-heading">
+                        <i data-lucide="newspaper" class="text-accent-blue w-5 h-5"></i>
+                        Local Hub News & Community Support
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-600 dark:text-brand-400">Local Highlight</span>
+                                <h4 class="font-bold text-sm mt-1">Moray Pride & Allies Planning</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Elgin planning committee calls for volunteers and artists for upcoming community showcases. Join us!</p>
+                            </div>
+                            <button onclick="switchTab('calendar')" class="mt-4 text-xs font-semibold text-accent-orange flex items-center gap-1 hover:underline">
+                                View Dates <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+
+                        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-accent-blue">Mental Well-being</span>
+                                <h4 class="font-bold text-sm mt-1">Inclusive Coffee Mornings</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Friendly weekly gathering in Elgin and Forres supporting LGBTQ+ individuals looking for peer connections.</p>
+                            </div>
+                            <button onclick="switchTab('calendar')" class="mt-4 text-xs font-semibold text-accent-orange flex items-center gap-1 hover:underline">
+                                Read details <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Fast-Access Widget -->
+                <div class="bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-800 dark:text-white flex items-center gap-2 font-heading">
+                            <i data-lucide="shield" class="text-rose-500 w-5 h-5"></i>
+                            Quick Helpline Access
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Immediate connection lines for support. Rest assured, dialing these numbers is private.</p>
+
+                        <div class="space-y-2">
+                            <a href="tel:111" class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-xl transition">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-2.5 h-2.5 bg-accent-blue rounded-full"></div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300">NHS 24 Mental Health</h4>
+                                        <p class="text-[9px] text-slate-500 dark:text-slate-400">Direct support in Scotland</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold text-accent-blue">Dial 111</span>
+                            </a>
+
+                            <a href="tel:116123" class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 rounded-xl transition">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-2.5 h-2.5 bg-rose-500 rounded-full"></div>
+                                    <div>
+                                        <h4 class="text-xs font-bold text-slate-700 dark:text-slate-300">Samaritans Scotland</h4>
+                                        <p class="text-[9px] text-slate-500 dark:text-slate-400">24/7 confidential listening</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-bold text-rose-600 dark:text-rose-400">Dial 116 123</span>
+                            </a>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('health')" class="mt-6 text-center text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                        View more safety lines <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- HEALTH HUB TAB CONTENT -->
+        <section id="tab-health" class="space-y-8 tab-content hidden">
+            
+            <!-- Quick search & category filters for Health Resources -->
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold font-heading">Mental & Physical Health Directory</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Filter verified local and national support contacts or search for safe clinics and practices.</p>
+                    </div>
+                    <div class="w-full md:w-64 relative">
+                        <input type="text" id="resourceSearchInput" onkeyup="filterResources()" placeholder="Search clinic, peer group..." class="w-full pl-9 pr-4 py-2.5 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                        <i data-lucide="search" class="absolute left-3 top-3 w-4.5 h-4.5 text-slate-400"></i>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                    <button onclick="filterResourceCategory('all')" id="resCat-all" class="res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-500 text-white shadow-sm transition">All Resources</button>
+                    <button onclick="filterResourceCategory('mental')" id="resCat-mental" class="res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-600 transition">Mental Health</button>
+                    <button onclick="filterResourceCategory('physical')" id="resCat-physical" class="res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-600 transition">Physical & Sexual Health</button>
+                    <button onclick="filterResourceCategory('local')" id="resCat-local" class="res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-600 transition">Moray Local Support</button>
+                </div>
+            </div>
+
+            <!-- Health Directory Grids -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="resourcesContainer">
+                
+                <!-- RESOURCE 1 -->
+                <div class="resource-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="mental local">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="px-2.5 py-1 bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 text-[10px] font-bold rounded-full uppercase tracking-wider">Mental Health / Local</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Elgin</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mt-3 text-base">Moray Mental Health & Wellbeing Hub</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Integrated mental wellness support run by friendly local teams. They provide LGBTQ+ friendly drop-ins and customized individual recovery goals in Elgin and surrounding towns.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">Free Confidential Service</span>
+                        <a href="tel:01343567480" class="text-xs font-bold text-accent-blue hover:underline flex items-center gap-1">Call 01343 567480</a>
+                    </div>
+                </div>
+
+                <!-- RESOURCE 2 -->
+                <div class="resource-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="physical local">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold rounded-full uppercase tracking-wider">Physical & Sexual Health / Local</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="map-pin" class="w-3 h-3"></i> Elgin / NHS Moray</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mt-3 text-base">NHS Moray Sexual Health Clinic</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Confidential sexual health services, PrEP provision, free contraception, and screening clinics at Dr Gray's Hospital. Supportive, non-judgmental staff trained in LGBTQ+ patient advocacy.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">NHS Service</span>
+                        <a href="tel:03453379900" class="text-xs font-bold text-accent-blue hover:underline flex items-center gap-1">Call 0345 337 9900</a>
+                    </div>
+                </div>
+
+                <!-- RESOURCE 3 -->
+                <div class="resource-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="mental">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="px-2.5 py-1 bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 text-[10px] font-bold rounded-full uppercase tracking-wider">Mental Health</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3"></i> Scotland-wide</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mt-3 text-base">LGBT Helpline Scotland</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Dedicated safe national helpline providing emotional validation, active listening, and advice tailored specifically to transgender, non-binary, and queer individuals in Scotland.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">Tue, Wed & Thu support</span>
+                        <a href="tel:03001232523" class="text-xs font-bold text-accent-blue hover:underline flex items-center gap-1">Call 0300 123 2523</a>
+                    </div>
+                </div>
+
+                <!-- RESOURCE 4 -->
+                <div class="resource-card bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition flex flex-col justify-between" data-category="physical">
+                    <div>
+                        <div class="flex items-start justify-between">
+                            <span class="px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[10px] font-bold rounded-full uppercase tracking-wider">Physical & Sexual Health</span>
+                            <span class="text-xs text-slate-400 flex items-center gap-1"><i data-lucide="globe" class="w-3 h-3"></i> National</span>
+                        </div>
+                        <h3 class="font-bold text-slate-800 dark:text-white mt-3 text-base">Waverley Care Scotland</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">Scotland’s leading charity supporting people with HIV, Hepatitis C, and promoting optimal sexual health. Direct chat, testing advice, and localized support options available.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">Free post-out testing kits</span>
+                        <a href="https://www.waverleycare.org" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-accent-blue hover:underline flex items-center gap-1">Visit Website <i data-lucide="external-link" class="w-3 h-3"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Breathing & Grounding Tool -->
+            <div class="bg-gradient-to-br from-slate-900 to-brand-900 text-white rounded-3xl p-6 md:p-8 shadow-xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="max-w-md">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-accent-blue">Mindfulness Pause</span>
+                    <h3 class="text-xl md:text-2xl font-bold mt-1 font-heading">Interactive Anxiety Relief Tool</h3>
+                    <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                        If you are feeling overwhelmed, take a moment here. Follow the breathing circle below to regulate your nervous system. Inhale as it expands, hold, and exhale as it returns to size.
+                    </p>
+                    
+                    <div class="mt-4 flex gap-2">
+                        <button onclick="toggleBreathingGuide()" id="breathingBtn" class="bg-brand-500 hover:bg-brand-400 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">
+                            Start Breathing Guide
+                        </button>
+                        <button onclick="resetBreathingGuide()" class="border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-bold px-3 py-2 rounded-xl transition">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Breathing visual representation -->
+                <div class="flex flex-col items-center justify-center p-4">
+                    <div class="relative w-36 h-36 flex items-center justify-center">
+                        <!-- Animated pulsing ring -->
+                        <div id="breathingVisual" class="absolute w-24 h-24 rounded-full bg-accent-orange/20 border-2 border-accent-orange transition-transform duration-[4000ms] flex items-center justify-center">
+                            <span id="breathingText" class="text-[11px] font-bold text-white tracking-wide">PAUSED</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 uppercase tracking-widest text-center" id="breathingStateMsg">Press start to align your breath</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENTS CALENDAR TAB CONTENT -->
+        <section id="tab-calendar" class="space-y-6 tab-content hidden">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Main Calendar Layout -->
+                <div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-4 md:p-6 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <!-- Calendar Header Controls -->
+                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-100 dark:border-slate-700/50">
+                            <div>
+                                <h2 id="calendarMonthYear" class="text-lg font-bold font-heading">July 2026</h2>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">Click a day to find community events happening across Moray</p>
+                            </div>
+                            <div class="flex gap-1.5 font-sans">
+                                <button onclick="changeMonth(-1)" class="p-2 border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-xl transition" title="Previous Month">
+                                    <i data-lucide="chevron-left" class="w-4.5 h-4.5"></i>
+                                </button>
+                                <button onclick="changeMonth(1)" class="p-2 border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-xl transition" title="Next Month">
+                                    <i data-lucide="chevron-right" class="w-4.5 h-4.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Days of Week labels -->
+                        <div class="grid grid-cols-7 text-center text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2">
+                            <div>Su</div>
+                            <div>Mo</div>
+                            <div>Tu</div>
+                            <div>We</div>
+                            <div>Th</div>
+                            <div>Fr</div>
+                            <div>Sa</div>
+                        </div>
+
+                        <!-- Calendar Grid Day Squares -->
+                        <div id="calendarGrid" class="grid grid-cols-7 gap-1 md:gap-2">
+                            <!-- Rendered via Javascript dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Sync Status Indicator / Last updated notice -->
+                    <div class="mt-6 pt-3 border-t border-slate-100 dark:border-slate-700/50 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" id="syncPingColor"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2" id="syncIndicatorColor"></span>
+                            </span>
+                            <span id="syncStatusText">Displaying local events database.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Details Panel -->
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700/50 mb-4">
+                            <h3 class="font-bold font-heading text-slate-800 dark:text-white flex items-center gap-2">
+                                <i data-lucide="calendar-days" class="text-brand-500 w-5 h-5"></i>
+                                Events on Selected Date
+                            </h3>
+                            <span id="selectedDateBadge" class="px-2.5 py-1 bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 font-semibold text-[10px] rounded-full">
+                                Jul 12, 2026
+                            </span>
+                        </div>
+
+                        <!-- Selected Events container -->
+                        <div id="eventListContainer" class="space-y-4 max-h-[350px] overflow-y-auto pr-1">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Add Event Suggestion (Manual Add) -->
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        <button onclick="openAddEventModal()" class="w-full flex items-center justify-center gap-1.5 py-2.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-bold rounded-xl transition">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            Add Quick Event to Device
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: Add Event Form -->
+    <div id="addEventModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 dark:border-slate-700/60 relative animate-in fade-in zoom-in-95 duration-150">
+            <button onclick="closeAddEventModal()" class="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 class="text-lg font-bold font-heading mb-1 text-slate-800 dark:text-white">Add Device Event</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Quickly save an event directly to this device's local database.</p>
+
+            <form id="addEventForm" onsubmit="submitEventForm(event)" class="space-y-3">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Event Title</label>
+                    <input type="text" id="eventInputTitle" required placeholder="e.g. Forres Coffee & Chat" class="w-full text-xs p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none dark:text-white">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Date</label>
+                        <input type="date" id="eventInputDate" required class="w-full text-xs p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Time</label>
+                        <input type="time" id="eventInputTime" required class="w-full text-xs p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none dark:text-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Location / Venue</label>
+                    <input type="text" id="eventInputLoc" required placeholder="e.g. Elgin Community Center" class="w-full text-xs p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">Brief Description</label>
+                    <textarea id="eventInputDesc" required rows="2" placeholder="Tell us what's planned..." class="w-full text-xs p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none dark:text-white"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs transition shadow shadow-brand-500/20">
+                        Add to Calendar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800/80 transition-colors duration-300 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-center md:text-left">
+                    <h4 class="text-sm font-bold text-slate-800 dark:text-white font-heading">LGBTQ Moray</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Empowering the Elgin, Forres, Buckie, Keith, and Lossiemouth LGBTQ+ network.</p>
+                </div>
+                <div class="flex gap-4 text-xs text-slate-400">
+                    <button onclick="scrollToResources()" class="hover:text-slate-600 dark:hover:text-white transition">Crisis Lines</button>
+                    <span>&bull;</span>
+                    <button onclick="quickExit()" class="text-rose-500 hover:text-rose-600 transition font-bold">Quick Escape</button>
+                </div>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-center text-[10px] text-slate-400 leading-relaxed">
+                <p>Designed for immediate, safe, local resource sharing in Scotland. Use with privacy and care. No persistent personal data is stored outside your browser storage.</p>
+                <p class="mt-1">&copy; 2026 LGBTQ Moray Resources & Community Hub. Built for safety, resilience, and inclusivity.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Core Application State & Storage Keys ---
+        let currentMonth = 6; // July
+        let currentYear = 2026;
+        let selectedDate = new Date(2026, 6, 12); // Default to July 12, 2026
+        let breathingInterval = null;
+
+        // Default local static fallback events for LGBTQ Moray Calendar
+        const defaultEvents = [
+            { id: 1, date: '2026-07-04', title: 'Coffee & Chat', time: '11:00', loc: 'The Dandy Lion Cafe, Forres', desc: 'Relaxed meet up for peer support over morning brew.' },
+            { id: 2, date: '2026-07-12', title: 'Moray Pride Planning Meeting', time: '14:00', loc: 'Community Hall, Elgin', desc: 'Collaborative board session outlining parade logistics, staging, and volunteering roles.' },
+            { id: 3, date: '2026-07-12', title: 'LGBTQ+ Book Club', time: '18:30', loc: 'Waterstones Cafe, Elgin', desc: 'Fabulous discussion on modern queer literature and speculative fiction.' },
+            { id: 4, date: '2026-07-18', title: 'Youth Group Support Session', time: '16:00', loc: 'Elgin Youth Café', desc: 'Dedicated safe space for ages 13-17 to connect and participate in creative arts.' },
+            { id: 5, date: '2026-07-25', title: 'Moray Coast Beach Walk', time: '13:00', loc: 'Lossiemouth East Beach', desc: 'Social outdoor walk, perfect for mental well-being and meetups. Allies welcome!' },
+            { id: 6, date: '2026-08-01', title: 'Pride Warm-up Brunch', time: '11:00', loc: 'Bistro 1, Elgin', desc: 'Start the new month right with a warm community breakfast and conversation.' }
+        ];
+
+        // Read saved events
+        let events = JSON.parse(localStorage.getItem('moray_out_events')) || defaultEvents;
+        let moodLog = JSON.parse(localStorage.getItem('moray_out_moods')) || {};
+
+        // --- Window Initial Load Actions ---
+        window.onload = function() {
+            // Load theme
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            // Init Lucide Icons
+            lucide.createIcons();
+
+            updateSyncStatus('local');
+            renderCalendar();
+
+            // Check if PWA installation is valid & handle banner
+            setupPwaHandlers();
+
+            // Show last logged mood feedback
+            updateMoodFeedbackUI();
+        };
+
+        // --- Theme Switcher ---
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+
+        // --- Privacy Safeguard: Quick Exit ---
+        function quickExit() {
+            // Replaces browser history so back button goes to search page, keeping your history clean
+            window.location.replace("https://www.google.co.uk/search?q=weather+scotland");
+        }
+
+        function scrollToResources() {
+            switchTab('health');
+            document.getElementById('tab-health').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- Tab Management ---
+        function switchTab(tabId) {
+            // Arrays of all valid tab IDs
+            const allTabs = ['dashboard', 'health', 'calendar'];
+            
+            // Loop through all tabs to hide content and reset buttons
+            allTabs.forEach(id => {
+                const contentDiv = document.getElementById(`tab-${id}`);
+                const btn = document.getElementById(`tabBtn-${id}`);
+                
+                if (contentDiv) {
+                    contentDiv.classList.remove('block');
+                    contentDiv.classList.add('hidden');
+                }
+                
+                if (btn) {
+                    btn.className = "flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
+                }
+            });
+
+            // Show the selected content and activate the button
+            const activeContent = document.getElementById(`tab-${tabId}`);
+            const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+            
+            if (activeContent) {
+                activeContent.classList.remove('hidden');
+                activeContent.classList.add('block');
+            }
+            
+            if (activeBtn) {
+                activeBtn.className = "flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm";
+            }
+        }
+
+        // --- PWA Support Simulation ---
+        function setupPwaHandlers() {
+            const banner = document.getElementById('pwaBanner');
+            const installBtn = document.getElementById('pwaInstallBtn');
+
+            // Show simulated installation capability on devices
+            if (!localStorage.getItem('pwa_banner_dismissed')) {
+                banner.classList.remove('hidden');
+            }
+
+            installBtn.onclick = function() {
+                alertCustom("To install as an App:\n\n1. Tap 'Share' (iOS Safari) or options menu (Android Chrome)\n2. Select 'Add to Home Screen'\n\nEnjoy fast localized access!", "success");
+                localStorage.setItem('pwa_banner_dismissed', 'true');
+                banner.classList.add('hidden');
+            };
+        }
+
+        function dismissPwaBanner() {
+            localStorage.setItem('pwa_banner_dismissed', 'true');
+            document.getElementById('pwaBanner').classList.add('hidden');
+        }
+
+        // --- Mood Tracker Controller ---
+        function recordMood(label, emoji) {
+            const dateStr = new Date().toISOString().split('T')[0];
+            moodLog[dateStr] = { label, emoji };
+            localStorage.setItem('moray_out_moods', JSON.stringify(moodLog));
+            updateMoodFeedbackUI();
+            
+            if (label === 'Crisis') {
+                alertCustom("Hey there, you clicked 'Crisis'. Please note you are not alone. Please view our crisis phone numbers instantly.", "warning");
+                scrollToResources();
+            } else {
+                alertCustom(`Logged: Feeling ${label} ${emoji}. Self-care logged privately on this device.`, "success");
+            }
+        }
+
+        function updateMoodFeedbackUI() {
+            const dateStr = new Date().toISOString().split('T')[0];
+            const feedbackDiv = document.getElementById('moodFeedback');
+            const record = moodLog[dateStr];
+
+            if (record) {
+                feedbackDiv.innerHTML = `
+                    <div class="flex items-center gap-2 bg-brand-50/50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 p-2.5 rounded-xl border border-brand-100 dark:border-brand-900/40">
+                        <span class="text-xl">${record.emoji}</span>
+                        <div>
+                            <p class="font-bold text-[11px]">Mood recorded today!</p>
+                            <p class="text-[9px] opacity-80">You indicated feeling "${record.label}" earlier. Take it easy.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                feedbackDiv.innerHTML = `<span class="opacity-75"><i class="inline-block w-3 h-3 align-middle" data-lucide="info"></i> Tap an emoji above to save your mood check-in privately.</span>`;
+            }
+            lucide.createIcons();
+        }
+
+        // --- Custom Clean Alerts ---
+        function alertCustom(msg, type = 'info') {
+            const alertBox = document.createElement('div');
+            alertBox.className = `fixed bottom-4 right-4 z-50 max-w-sm w-full p-4 rounded-2xl shadow-xl border text-xs font-medium flex items-start gap-3 transition-all duration-300 transform translate-y-10 opacity-0`;
+            
+            let icon = 'info';
+            let bg = 'bg-slate-900 dark:bg-slate-800 text-white border-slate-700';
+            if (type === 'success') {
+                icon = 'check-circle';
+                bg = 'bg-emerald-50 dark:bg-emerald-950/90 text-emerald-800 dark:text-emerald-100 border-emerald-100 dark:border-emerald-800';
+            } else if (type === 'warning') {
+                icon = 'alert-triangle';
+                bg = 'bg-rose-50 dark:bg-rose-950/90 text-rose-800 dark:text-rose-100 border-rose-100 dark:border-rose-800';
+            }
+
+            alertBox.className += ` ${bg}`;
+            alertBox.innerHTML = `
+                <div class="mt-0.5"><i data-lucide="${icon}" class="w-4 h-4"></i></div>
+                <div class="flex-1">
+                    <p class="leading-relaxed">${msg.replace(/\n/g, '<br>')}</p>
+                </div>
+            `;
+            document.body.appendChild(alertBox);
+            lucide.createIcons();
+
+            // animate in
+            setTimeout(() => {
+                alertBox.classList.remove('translate-y-10', 'opacity-0');
+            }, 50);
+
+            // remove
+            setTimeout(() => {
+                alertBox.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => alertBox.remove(), 300);
+            }, 6000);
+        }
+
+        // --- Interactive Mindfulness Breathing Guide ---
+        function toggleBreathingGuide() {
+            const visual = document.getElementById('breathingVisual');
+            const btn = document.getElementById('breathingBtn');
+            const stateText = document.getElementById('breathingText');
+            const stateMsg = document.getElementById('breathingStateMsg');
+
+            if (breathingInterval) {
+                // Pause
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+                visual.style.transform = 'scale(1)';
+                stateText.textContent = "PAUSED";
+                stateMsg.textContent = "Press start to align your breath";
+                btn.textContent = "Start Breathing Guide";
+                visual.classList.remove('breathing-circle-anim');
+            } else {
+                // Start sequence
+                btn.textContent = "Stop Breathing Guide";
+                visual.classList.add('breathing-circle-anim');
+                let phase = 0; // 0 Inhale, 1 Hold, 2 Exhale
+                
+                const step = () => {
+                    if (phase === 0) {
+                        stateText.textContent = "INHALE";
+                        stateMsg.textContent = "Deeply draw in cool, fresh air...";
+                        phase = 1;
+                    } else if (phase === 1) {
+                        stateText.textContent = "HOLD";
+                        stateMsg.textContent = "Savor the feeling of stability...";
+                        phase = 2;
+                    } else {
+                        stateText.textContent = "EXHALE";
+                        stateMsg.textContent = "Let out tension and heavy shoulders...";
+                        phase = 0;
+                    }
+                };
+
+                step();
+                breathingInterval = setInterval(step, 2666); // Cycle roughly based on animation timing
+            }
+        }
+
+        function resetBreathingGuide() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+            const visual = document.getElementById('breathingVisual');
+            visual.classList.remove('breathing-circle-anim');
+            visual.style.transform = 'scale(1)';
+            document.getElementById('breathingText').textContent = "PAUSED";
+            document.getElementById('breathingStateMsg').textContent = "Press start to align your breath";
+            document.getElementById('breathingBtn').textContent = "Start Breathing Guide";
+        }
+
+        // --- HEALTH DIRECTORY SEARCH & CATEGORY FILTERS ---
+        function filterResources() {
+            const query = document.getElementById('resourceSearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.resource-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        function filterResourceCategory(category) {
+            // Update active state style on tags
+            document.querySelectorAll('.res-cat-btn').forEach(btn => {
+                btn.className = "res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200/60 dark:hover:bg-slate-600 transition";
+            });
+
+            const activeBtn = document.getElementById(`resCat-${category}`);
+            activeBtn.className = "res-cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-500 text-white shadow-sm transition";
+
+            // Filter resources in the grid
+            const cards = document.querySelectorAll('.resource-card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = "flex";
+                } else {
+                    const cats = card.getAttribute('data-category').split(' ');
+                    if (cats.includes(category)) {
+                        card.style.display = "flex";
+                    } else {
+                        card.style.display = "none";
+                    }
+                }
+            });
+        }
+
+        // --- EVENTS CALENDAR IMPLEMENTATION ---
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const header = document.getElementById('calendarMonthYear');
+            header.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            // Calculate dates offsets
+            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+            const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const prevLastDay = new Date(currentYear, currentMonth, 0).getDate();
+
+            // Empty squares for previous month dates
+            for (let i = firstDayIndex; i > 0; i--) {
+                const dayNum = prevLastDay - i + 1;
+                const square = document.createElement('div');
+                square.className = "h-10 md:h-12 border border-slate-50 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-900/30 text-slate-300 dark:text-slate-700 flex items-center justify-center text-xs rounded-lg select-none";
+                square.textContent = dayNum;
+                grid.appendChild(square);
+            }
+
+            // Real month dates
+            for (let day = 1; day <= lastDay; day++) {
+                const dateString = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                // Check if date has events
+                const dayEvents = events.filter(e => e.date === dateString);
+                const hasEvents = dayEvents.length > 0;
+
+                // Is this currently selected?
+                const isSelected = selectedDate.getDate() === day && selectedDate.getMonth() === currentMonth && selectedDate.getFullYear() === currentYear;
+
+                const square = document.createElement('button');
+                square.onclick = () => selectCalendarDate(day, currentMonth, currentYear);
+                
+                let btnStyles = "h-10 md:h-12 border flex flex-col items-center justify-between p-1 text-xs font-semibold rounded-lg relative hover:border-brand-400 transition ";
+                
+                if (isSelected) {
+                    btnStyles += "bg-brand-500 text-white border-brand-500 shadow-md shadow-brand-500/20";
+                } else {
+                    btnStyles += "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700/60 text-slate-700 dark:text-slate-300";
+                }
+
+                square.className = btnStyles;
+                
+                // Day number layout
+                square.innerHTML = `<span class="text-[11px]">${day}</span>`;
+
+                // Render tiny bullet if it contains scheduled items
+                if (hasEvents) {
+                    const bulletColor = isSelected ? 'bg-white' : 'bg-brand-500';
+                    square.innerHTML += `<span class="absolute bottom-1 w-1.5 h-1.5 ${bulletColor} rounded-full"></span>`;
+                }
+
+                grid.appendChild(square);
+            }
+
+            // Load panel data for current date
+            populateSelectedDayEvents();
+        }
+
+        function selectCalendarDate(day, month, year) {
+            selectedDate = new Date(year, month, day);
+            
+            // Set date badge UI
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            document.getElementById('selectedDateBadge').textContent = selectedDate.toLocaleDateString('en-GB', options);
+
+            renderCalendar();
+        }
+
+        function populateSelectedDayEvents() {
+            const dateString = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+            const container = document.getElementById('eventListContainer');
+            container.innerHTML = '';
+
+            const dayEvents = events.filter(e => e.date === dateString);
+
+            if (dayEvents.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <i data-lucide="calendar-heart" class="w-8 h-8 mx-auto mb-2 text-slate-300 dark:text-slate-700"></i>
+                        <p class="text-xs">No events scheduled today.</p>
+                        <p class="text-[10px] mt-1">Check another day or add a quick device event!</p>
+                    </div>
+                `;
+            } else {
+                dayEvents.forEach(e => {
+                    container.innerHTML += `
+                        <div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+                            <div>
+                                <div class="flex items-center justify-between gap-2">
+                                    <h4 class="font-bold text-xs text-slate-800 dark:text-white leading-tight">${e.title}</h4>
+                                    <span class="text-[9px] font-bold text-brand-600 dark:text-brand-400 shrink-0"><i data-lucide="clock" class="inline w-3 h-3 align-text-bottom"></i> ${e.time}</span>
+                                </div>
+                                <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+                                    <i data-lucide="map-pin" class="w-3 h-3 inline"></i> ${e.loc}
+                                </p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed whitespace-pre-line">${e.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            lucide.createIcons();
+        }
+
+        function updateSyncStatus(status) {
+            const pulse = document.getElementById('syncPingColor');
+            const dot = document.getElementById('syncIndicatorColor');
+            const label = document.getElementById('syncStatusText');
+
+            pulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-indigo-400";
+            dot.className = "relative inline-flex rounded-full h-2 w-2 bg-indigo-500";
+            label.textContent = "Offline local calendar activated.";
+        }
+
+        // Add Quick Device Event Modal
+        function openAddEventModal() {
+            document.getElementById('addEventModal').classList.remove('hidden');
+            document.getElementById('addEventModal').classList.add('flex');
+            
+            // prefill date field with currently selected
+            const dateStr = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+            document.getElementById('eventInputDate').value = dateStr;
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeAddEventModal();
+            }
+        });
+
+        function closeAddEventModal() {
+            document.getElementById('addEventModal').classList.add('hidden');
+            document.getElementById('addEventModal').classList.remove('flex');
+        }
+
+        function submitEventForm(e) {
+            e.preventDefault();
+            const title = document.getElementById('eventInputTitle').value;
+            const date = document.getElementById('eventInputDate').value;
+            const time = document.getElementById('eventInputTime').value;
+            const loc = document.getElementById('eventInputLoc').value;
+            const desc = document.getElementById('eventInputDesc').value;
+
+            const newEvent = {
+                id: Date.now(),
+                date,
+                title,
+                time,
+                loc,
+                desc
+            };
+
+            events.push(newEvent);
+            localStorage.setItem('moray_out_events', JSON.stringify(events));
+            
+            // Close and reload UI
+            closeAddEventModal();
+            document.getElementById('addEventForm').reset();
+            
+            // Set calendar selected date to match new event
+            const parsedDate = new Date(date);
+            selectedDate = parsedDate;
+            currentMonth = parsedDate.getMonth();
+            currentYear = parsedDate.getFullYear();
+            
+            renderCalendar();
+            alertCustom("Local event saved to your device calendar!", "success");
+        }
+
+    </script>
+</body>
+</html>
