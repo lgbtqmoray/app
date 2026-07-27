@@ -1,0 +1,17 @@
+{
+"name": "LGBTQ Moray Resource Hub",
+"short_name": "LGBTQ Moray",
+"start_url": "./",
+"display": "standalone",
+"background_color": "#1c2e27",
+"theme_color": "#fb8c00",
+"description": "Progressive Web App for LGBTQ+ community resources, events, and mental/physical health links in Moray, Scotland.",
+"icons":
+   $$
+  { "src": "https://raw.githubusercontent.com/lgbtqmoray/logo/main/logo.png", "sizes": "192x192", "type": "image/png" }, { "src": "https://raw.githubusercontent.com/lgbtqmoray/logo/main/logo.png", "sizes": "512x512", "type": "image/png" } 
+$$
+}
+
+
+
+
