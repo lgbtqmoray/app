@@ -1287,7 +1287,23 @@
         }
 
         function quickExit() {
-            window.location.replace("https://www.google.co.uk/search?q=weather+scotland");
+    // 1. Instantly wipe all page content for immediate privacy
+    document.body.innerHTML = '<div style="position:fixed;inset:0;background:#ffffff;z-index:999999;"></div>';
+    document.title = "Google";
+    
+    const exitUrl = "https://www.google.com";
+    
+    // 2. Redirect the top-level browser tab to break out of iframe/preview containers
+    try {
+        if (window.top && window.top !== window) {
+            window.top.location.href = exitUrl;
+        } else {
+            window.location.replace(exitUrl);
+        }
+    } catch (e) {
+        window.location.href = exitUrl;
+    }
+};
         }
 
         function scrollToResources() {
