@@ -2,7 +2,7 @@
 <html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Moray Out - LGBTQ+ Resource & Events Hub</title>
     
     <!-- Tailwind CSS for modern layout and design -->
@@ -280,22 +280,22 @@
         </div>
 
         <!-- Tab Navigation Buttons -->
-        <div class="bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-2xl flex flex-wrap gap-1 shadow-inner">
-            <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm">
-                <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                <span>Dashboard</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 bg-slate-100 dark:bg-slate-800/80 p-1.5 rounded-2xl shadow-inner w-full max-w-full overflow-hidden">
+            <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm">
+                <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0"></i>
+                <span class="truncate">Dashboard</span>
             </button>
-            <button onclick="switchTab('health')" id="tabBtn-health" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
-                <span>Health Hub</span>
+            <button onclick="switchTab('health')" id="tabBtn-health" class="w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <i data-lucide="heart-pulse" class="w-4 h-4 shrink-0"></i>
+                <span class="truncate">Health Hub</span>
             </button>
-            <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-                <i data-lucide="calendar" class="w-4 h-4"></i>
-                <span>Moray Events</span>
+            <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <i data-lucide="calendar" class="w-4 h-4 shrink-0"></i>
+                <span class="truncate">Moray Events</span>
             </button>
-            <button onclick="switchTab('contact')" id="tabBtn-contact" class="flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
-                <i data-lucide="mail" class="w-4 h-4"></i>
-                <span>Contact Us</span>
+            <button onclick="switchTab('contact')" id="tabBtn-contact" class="w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200">
+                <i data-lucide="mail" class="w-4 h-4 shrink-0"></i>
+                <span class="truncate">Contact Us</span>
             </button>
         </div>
 
@@ -1289,21 +1289,36 @@
 
         // --- Privacy Safeguard: Quick Exit ---
         function quickExit() {
-            // 1. Instantly wipe all page content for immediate privacy
-            document.body.innerHTML = '<div style="position:fixed;inset:0;background:#ffffff;z-index:999999;"></div>';
-            document.title = "Google";
+            const exitUrl = "https://www.google.co.uk/search?q=weather+scotland";
             
-            const exitUrl = "https://www.google.com";
+            // 1. Immediately wipe screen content and title for instant privacy
+            const fakeUI = `<div style="background:#fff; width:100vw; height:100vh; position:fixed; top:0; left:0; z-index:999999; display:flex; flex-direction:column; font-family:sans-serif;">
+                <div style="padding:15px 20px; display:flex; align-items:center; border-bottom:1px solid #dfe1e5; gap:20px;">
+                    <span style="font-size:24px; font-weight:bold; letter-spacing:-1px;"><span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span></span>
+                    <div style="flex-grow:1; max-width:600px; height:44px; border-radius:24px; border:1px solid #dfe1e5; padding:0 20px; display:flex; align-items:center; color:#323232;">weather scotland</div>
+                </div>
+                <div style="padding:20px; color:#70757a; font-size:14px;">About 244,000,000 results (0.42 seconds)</div>
+            </div>`;
             
-            // 2. Redirect the top-level browser tab to break out of iframe/preview containers
+            document.body.innerHTML = fakeUI;
+            document.title = "weather scotland - Google Search";
+
+            // 2. Escape Domain Masking / Frame Forwarding using target="_top"
             try {
-                if (window.top && window.top !== window) {
-                    window.top.location.href = exitUrl;
-                } else {
-                    window.location.replace(exitUrl);
-                }
+                // Creates an invisible link that forces the absolute top-level browser tab to navigate
+                const exitLink = document.createElement('a');
+                exitLink.href = exitUrl;
+                exitLink.target = '_top'; 
+                document.body.appendChild(exitLink);
+                exitLink.click();
+                
+                // Programmatic fallback
+                setTimeout(() => {
+                    if (window.top) window.top.location.replace(exitUrl);
+                }, 100);
             } catch (e) {
-                window.location.href = exitUrl;
+                // Fallback for extreme sandbox restrictions
+                window.location.replace(exitUrl); 
             }
         }
 
@@ -1325,7 +1340,7 @@
                 }
                 
                 if (btn) {
-                    btn.className = "flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
+                    btn.className = "w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200";
                 }
             });
 
@@ -1338,7 +1353,7 @@
             }
             
             if (activeBtn) {
-                activeBtn.className = "flex-1 min-w-[120px] py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm";
+                activeBtn.className = "w-full py-2.5 px-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 bg-white dark:bg-slate-700 text-brand-500 dark:text-white shadow-sm";
             }
         }
 
